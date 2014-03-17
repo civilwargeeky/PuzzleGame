@@ -1,0 +1,9 @@
+#Ignore python cached modules
+__pycache__/
+
+#Ignore my user-made accounts
+Accounts/
+*.bank
+
+#System Related
+Thumbs.db
