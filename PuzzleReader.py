@@ -6,21 +6,39 @@ jaggiesDefault = 6
 
 class piece:
   jaggies = jaggiesDefault
+  pos = [-1,-1] #Position in the board
   def classInit(num):
     piece.jaggies = num
     
   def __init__(self, rawString):
-    linesTab = [int(a) for a in rawString.splitlines()]
+    if rawString == -1:
+      linesTab = [-1] * (piece.jaggies**2 + 1)
+    else:
+      linesTab = [int(a) for a in rawString.splitlines()]
     self.id = linesTab[0]
     linesTab.pop(0)
     self.sides = [ linesTab[piece.jaggies*a:piece.jaggies*(a+1)] for a in range(4)] #More compact
-    self.isEdge = [ a == [1] * piece.jaggies for a in self.sides] #Same numbering scheme as sides. true if all numbers on side are 1
+    self.edge = [ a == [1] * piece.jaggies for a in self.sides] #Same numbering scheme as sides. true if all numbers on side are 1
+    
+  def __str__(self):
+    return str(self.id)
+  def __repr__(self):
+    return str(self.id)
     
   def getMatch(self, side):
     if not side in range(4): raise ValueError("Improper Side")
     toRet = [a^1 for a in self.sides[side]]
     toRet.reverse()
     return toRet
+  
+  def getSide(self, side):
+    return self.sides[side]
+    
+  def isEdge(self, side):
+    return self.edge[side]
+    
+  def setPos(self, pos):
+    self.pos = tuple(pos)
         
     
     
